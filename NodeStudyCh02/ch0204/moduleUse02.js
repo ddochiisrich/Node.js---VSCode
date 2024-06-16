@@ -7,7 +7,7 @@ ESM 방식의 모듈은 import 문을 이용해 불러올 모듈의 파일명을
 또는 상위 폴더에 package.json 파일에 {"type":"module"}로 설정되어 있어야
 한다. 그렇지 않으면 "SyntaxError : cannot use import statement outside a module"
 오류가 발생한다. package.json 파일에 {"type":"module"}을 설정하지 않고
-ESM 방식을 사용하려면 사용하는 모든 파일의 확장자를 .mjs로 사용하면 된다.*/
+ESM 방식을 사용하려면 사용하는 모든 파일의 확장자를 .mjs로 사용하면 된다!*/
 
 import { PI, helloUser, helloTest } from "./module/myModule02_ESM.js";
 console.log("PI : ", PI);
