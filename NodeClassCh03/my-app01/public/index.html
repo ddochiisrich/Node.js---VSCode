@@ -9,6 +9,7 @@
       padding: 3px; margin: 3px;
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
   <h1>REST(Representational State Transfer) API 요청</h1>  
@@ -77,7 +78,7 @@ const deleteForm = document.querySelector("#deleteForm");
           console.log(resObj);
           const tag = `<ul>
                         <li>no: ${resObj.no}</li>
-                        <li>update: ${resObj.delete}</li>
+                        <li>delete: ${resObj.delete}</li>
                       </ul>`;
           const result = document.querySelector("#result");
           result.innerHTML = tag;
@@ -167,17 +168,27 @@ const writeForm = document.querySelector("#writeForm");
 const commentForm = document.querySelector("#commentForm");
     commentForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      
+
       async function process(no, pageNum, result) {
-        const res = await fetch(`comments/${no}/${pageNum}`);
-        const resObj = await res.json();
-        console.log(resObj);
+        const res = await axios.get(`comments/${no}/${pageNum}`);
+        console.log(res);
         const tag = `<ul>
-                        <li>pageNum: ${resObj.no}</li>
-                        <li>keyword: ${resObj.pageNum}</li>
+                        <li>pageNum: ${res.data.no}</li>
+                        <li>keyword: ${res.data.pageNum}</li>
                       </ul>`;
         result.innerHTML = tag;
       };
+      
+      // async function process(no, pageNum, result) {
+      //   const res = await fetch(`comments/${no}/${pageNum}`);
+      //   const resObj = await res.json();
+      //   console.log(resObj);
+      //   const tag = `<ul>
+      //                   <li>pageNum: ${resObj.no}</li>
+      //                   <li>keyword: ${resObj.pageNum}</li>
+      //                 </ul>`;
+      //   result.innerHTML = tag;
+      // };
 
       const pageNum = document.querySelector("#formPageNum").value;
       const no = document.querySelector("#formNo").value;
@@ -194,21 +205,32 @@ const commentForm = document.querySelector("#commentForm");
       const params = `?page-num=${pageNum}&keyword=${keyword}`;
 
       // http://localhost:3000/comment?page-num=3&keyword=REST API`
-      fetch("comments" + params)
-        .then(res => res.json())
+      axios.get("comments" + params)
         .then(resObj => { 
           console.log(resObj);
           const tag = `<ul>
-                        <li>pageNum: ${resObj.pageNum}</li>
-                        <li>keyword: ${resObj.keyword}</li>
+                        <li>pageNum: ${resObj.data.pageNum}</li>
+                        <li>keyword: ${resObj.data.keyword}</li>
                       </ul>`;
           const result = document.querySelector("#result");
           result.innerHTML = tag;
-        })
-        .catch(err => console.log(err))
-        .finally(() => {
-          console.log("요청 완료");
-        })
+        });
+
+      // fetch("comments" + params)
+      //   .then(res => res.json())
+      //   .then(resObj => { 
+      //     console.log(resObj);
+      //     const tag = `<ul>
+      //                   <li>pageNum: ${resObj.pageNum}</li>
+      //                   <li>keyword: ${resObj.keyword}</li>
+      //                 </ul>`;
+      //     const result = document.querySelector("#result");
+      //     result.innerHTML = tag;
+      //   })
+      //   .catch(err => console.log(err))
+      //   .finally(() => {
+      //     console.log("요청 완료");
+      //   })
 
     });
   </script>
